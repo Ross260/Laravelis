@@ -18,7 +18,7 @@ Route::get('/', function () { // lorsque j'accede à la page racine, répond par
     return view('welcome');
 });
 
-Route::get('/bloc', function (Request $request) {
+Route::get('/blog', function (Request $request) {
     return [
         // "name" => $request->path(), // retourne l'url courante
         // "name" => $request->url(), // retourne l'url actuel
@@ -27,3 +27,15 @@ Route::get('/bloc', function (Request $request) {
         "Article" => "article 1",
     ];
 });
+
+Route::get( '/blog/{slug}-{id}', function (string $slug, string $id) { // les {} permettes de dire qu'on aura un parametre dynamique
+    return [
+        "slug" => $slug,
+        "id" => $id
+    ];
+    // on peut ajouter des methodes suplémentaires sur des routes
+    // where() :: est une methode permettant de spécifier des contrainte sur un paramètre
+})->where([
+    'id' => '[0-9]+', // the + to specify that they are only a numerical values
+    'slug' => '[a-z0-9\-]+' // to specify that we could have characters between a and z, 0 and 9 and also -. and the + to specify thay it could be repeated more than once
+]);
