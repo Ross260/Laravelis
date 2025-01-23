@@ -20,15 +20,17 @@ Route::get('/', function () { // lorsque j'accede à la page racine, répond par
 
 Route::get('/blog', function (Request $request) {
     return [
-        // "name" => $request->path(), // retourne l'url courante
-        // "name" => $request->url(), // retourne l'url actuel
-        // "name" => $request->all(), // retourne l'url courante
+
         "name" => $request->input('name','Doe'), // retourne le nom, s'il n'y a pas de nom en entrer renvoie la valeur par défaut
         "Article" => "article 1",
+        "link" => route('blog.show', ['slug' => 'article', 'id' => 12 ]),
     ];
-});
+})->name('blog.index');
 
-Route::get( '/blog/{slug}-{id}', function (string $slug, string $id) { // les {} permettes de dire qu'on aura un parametre dynamique
+Route::get( '/blog/{slug}-{id}', function (string $slug, string $id) { 
+    // les {} permettes de dire qu'on aura un parametre dynamique
+    // il est tout à fait possible d'ajouter le $request comme 3e parametre et de l'utiliser
+
     return [
         "slug" => $slug,
         "id" => $id
@@ -38,4 +40,4 @@ Route::get( '/blog/{slug}-{id}', function (string $slug, string $id) { // les {}
 })->where([
     'id' => '[0-9]+', // the + to specify that they are only a numerical values
     'slug' => '[a-z0-9\-]+' // to specify that we could have characters between a and z, 0 and 9 and also -. and the + to specify thay it could be repeated more than once
-]);
+])->name('blog.show');
