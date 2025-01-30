@@ -18,6 +18,7 @@ Route::get('/', function () { // lorsque j'accede à la page racine, répond par
     return view('welcome');
 });
 
+
 Route::get('/blog', function (Request $request) {
     return [
 
