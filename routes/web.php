@@ -18,7 +18,10 @@ Route::get('/', function () { // lorsque j'accede à la page racine, répond par
     return view('welcome');
 });
 
+
+
 Route::prefix('/blog')->name('blog.')->group(function () {  //permet de grouper les routes qui ont un meme préfixe, 
+    
     // mettre toutes ces routes à l'interieur en enlevant le préfixe vu qu'il est déja marqué ici
     Route::get('/', function (Request $request) {
         return [
@@ -37,11 +40,13 @@ Route::prefix('/blog')->name('blog.')->group(function () {  //permet de grouper 
             "slug" => $slug,
             "id" => $id
         ];
+
         // on peut ajouter des methodes suplémentaires sur des routes
         // where() :: est une methode permettant de spécifier des contrainte sur un paramètre
     })->where([
         'id' => '[0-9]+', // the + to specify that they are only a numerical values
         'slug' => '[a-z0-9\-]+' // to specify that we could have characters between a and z, 0 and 9 and also -. and the + to specify thay it could be repeated more than once
     ])->name('show');
+    
 });
 
